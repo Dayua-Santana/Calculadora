@@ -5,6 +5,7 @@
 
 Console.Clear();
 
+decimal resultado = 0;
 bool deveContinuar = true; //atribuição
 
 while (deveContinuar == true) //condição
@@ -55,42 +56,40 @@ while (deveContinuar == true) //condição
         continue;
     }
 
-    decimal numeroDecimal = 1.1234567m;
-
     decimal primeiroNumero = Convert.ToDecimal(strPrimeiroNumero);
     decimal segundoNumero = Convert.ToDecimal(strSegundoNumero);
 
-    decimal resultado;
 
-    if (operacaoSelecionada == "1")
+    switch (operacaoSelecionada)
     {
-        resultado = primeiroNumero + segundoNumero;
-        Console.WriteLine("A soma dos dois números é: " + resultado);
+        case "1":
+            resultado = primeiroNumero + segundoNumero;
+            break;
+
+        case "2":
+            resultado = primeiroNumero - segundoNumero;
+            break;
+        case "3":
+            resultado = primeiroNumero * segundoNumero;
+            break;
+        case "4":
+            if (segundoNumero == 0)
+            {
+                Console.WriteLine("Não é possivel dividir por 0!!!");
+                continue;
+            }
+
+            resultado = primeiroNumero / segundoNumero;
+            break;
+        default:
+            Console.WriteLine("Selecione uma operação válida: ");
+            continue;
+
     }
 
-    else if (operacaoSelecionada == "2")
-    {
-        resultado = primeiroNumero - segundoNumero;
-    }
 
-    else if (operacaoSelecionada == "3")
-    {
-        resultado = primeiroNumero * segundoNumero;
-    }
-
-    else
-    {
-        if (segundoNumero == 0)
-        {
-            Console.WriteLine("Não é possivel dividir por 0!!!");
-            return;
-        }
-
-        resultado = primeiroNumero / segundoNumero;
-
-
-    }
-    Console.WriteLine("A Operação dos dois números resulta em: " + resultado);
-
-    Console.ReadLine();
 }
+Console.WriteLine("A Operação dos dois números resulta em: " + resultado);
+
+Console.ReadLine();
+
