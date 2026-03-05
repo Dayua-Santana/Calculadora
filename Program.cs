@@ -1,96 +1,90 @@
-﻿// Requisito 1: Nossa calculadora deve permitir a soma de dois números
-// Requisito 2: Nossa calculadora deve permitir a subtração de dois números
-// Requisito 3: Nossa calculadora deve permitir a multiplicação de dois números
-// Requisito 4: Nossa calculadora deve permitir a divisão de dois números
+﻿bool deveContinuar = true;
+decimal resultado = 0; // CORREÇÃO 1: Declarada fora com valor inicial
 
-Console.Clear();
-
-bool deveContinuar = true; //atribuição
-
-while (deveContinuar == true) //condição
+while (deveContinuar)
 {
-
-
     Console.WriteLine("---------------------------------------");
     Console.WriteLine("Calculadora 2026!");
     Console.WriteLine("---------------------------------------");
 
-    Console.WriteLine("1 - Soma");
-    Console.WriteLine("2 - Subtração");
-    Console.WriteLine("3 - Multiplicação");
-    Console.WriteLine("4 - Divisão");
-    Console.WriteLine("S - Sair");
+    Console.WriteLine("1 - Soma | 2 - Subtração | 3 - Multiplicação | 4 - Divisão| 5 - Tabuada | S - Sair");
 
     Console.Write("Selecione uma opção válida: ");
-    string? operacaoSelecionada = Console.ReadLine();
+    string? operacaoSelecionada = Console.ReadLine()?.ToUpper(); // ToUpper aceita 's' ou 'S'
 
     if (operacaoSelecionada == "S")
     {
         deveContinuar = false;
+        break; // Sai do loop imediatamente
+    }
+
+    //lógica da tabuada
+    if (operacaoSelecionada == "5")
+    {
+        Console.Write("Digite o número que deseja gerar a tabuada: ");
+        int numeroTabuada = Convert.ToInt32(Console.ReadLine());
+
+        //para cada
+        // 1 Contador/ iterador
+        // 2 Enquanto a condição for verdadeira executa o loop.....
+        // 3 Interação da variavel contador
+        for (int contador = 1; contador <= 10; contador = contador + 1)
+
+        {
+            int resultadoTabuada = numeroTabuada * contador;
+
+            string operacaoTabuada = numeroTabuada + " x " + contador + " = " + resultadoTabuada;
+
+            Console.WriteLine(operacaoTabuada);
+        }
+
+        Console.ReadLine();
         continue;
     }
+
     Console.Write("Digite o primeiro número: ");
     string? strPrimeiroNumero = Console.ReadLine();
-
-    Console.WriteLine();
 
     Console.Write("Digite o segundo número: ");
     string? strSegundoNumero = Console.ReadLine();
 
-    Console.WriteLine();
-
-    Console.WriteLine("O Primeiro numero digitado foi: " + strPrimeiroNumero);
-    Console.WriteLine("O Segundo numero digitado foi: " + strSegundoNumero);
-
-    Console.WriteLine();
-
-    bool primeiroNumeroVazio = string.IsNullOrEmpty(strPrimeiroNumero);
-    bool segundoNumeroVazio = string.IsNullOrEmpty(strSegundoNumero);
-
-    if (primeiroNumeroVazio == true || segundoNumeroVazio == true)
+    // Verificação de nulidade
+    if (string.IsNullOrEmpty(strPrimeiroNumero) || string.IsNullOrEmpty(strSegundoNumero))
     {
-        Console.Write("Digite um número válido: ");
-        Console.ReadLine();
-
+        Console.WriteLine("Erro: preencha os números!");
         continue;
     }
 
-    decimal numeroDecimal = 1.1234567m;
-
+    // Conversão (Dica: Use decimal.TryParse para ser mais seguro)
     decimal primeiroNumero = Convert.ToDecimal(strPrimeiroNumero);
     decimal segundoNumero = Convert.ToDecimal(strSegundoNumero);
 
-    decimal resultado;
-
-    if (operacaoSelecionada == "1")
+    switch (operacaoSelecionada)
     {
-        resultado = primeiroNumero + segundoNumero;
-        Console.WriteLine("A soma dos dois números é: " + resultado);
+        case "1":
+            resultado = primeiroNumero + segundoNumero;
+            break;
+        case "2":
+            resultado = primeiroNumero - segundoNumero;
+            break;
+        case "3":
+            resultado = primeiroNumero * segundoNumero;
+            break;
+        case "4":
+            if (segundoNumero == 0)
+            {
+                Console.WriteLine("Não é possivel dividir por 0!!!");
+                continue; // CORREÇÃO 2: Volta ao menu em vez de fechar
+            }
+            resultado = primeiroNumero / segundoNumero;
+            break;
+        default:
+            Console.WriteLine("Opção inválida!");
+            continue;
     }
 
-    else if (operacaoSelecionada == "2")
-    {
-        resultado = primeiroNumero - segundoNumero;
-    }
-
-    else if (operacaoSelecionada == "3")
-    {
-        resultado = primeiroNumero * segundoNumero;
-    }
-
-    else
-    {
-        if (segundoNumero == 0)
-        {
-            Console.WriteLine("Não é possivel dividir por 0!!!");
-            return;
-        }
-
-        resultado = primeiroNumero / segundoNumero;
-
-
-    }
-    Console.WriteLine("A Operação dos dois números resulta em: " + resultado);
-
-    Console.ReadLine();
+    // CORREÇÃO 3: Exibe o resultado dentro do loop para o usuário ver
+    Console.WriteLine($"\nO resultado é: {resultado}\n");
 }
+
+Console.WriteLine("Programa encerrado.");
