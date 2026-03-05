@@ -3,6 +3,7 @@
 // Requisito 3: Nossa calculadora deve permitir a multiplicação de dois números
 // Requisito 4: Nossa calculadora deve permitir a divisão de dois números
 
+List<string> historico = new List<string>();
 
 decimal resultado = 0;
 bool deveContinuar = true; //atribuição
@@ -20,6 +21,7 @@ while (deveContinuar == true) //condição
     Console.WriteLine("3 - Multiplicação");
     Console.WriteLine("4 - Divisão");
     Console.WriteLine("5 - Tabuada");
+    Console.WriteLine("H - Histórico de Operações");
     Console.WriteLine("S - Sair");
 
     Console.Write("Selecione uma opção válida: ");
@@ -30,7 +32,7 @@ while (deveContinuar == true) //condição
         deveContinuar = false;
         Console.Write("Progama encerrado!!");
         Console.ReadLine();
-        continue;
+        break;
     }
 
     //lógica da tabuada
@@ -49,6 +51,17 @@ while (deveContinuar == true) //condição
         continue;
     }
 
+    if (operacaoSelecionada == "H" || operacaoSelecionada == "h")
+    {
+        Console.WriteLine("----- HISTÓRICO DE OPERAÇÕES -----");
+
+        for (int i = 0; i < historico.Count; i++)
+        {
+            Console.WriteLine($"{i + 1} º Registro: {historico[i]}");
+        }
+        Console.ReadLine();
+        continue;
+    }
     Console.Write("Digite o primeiro número: ");
     string? strPrimeiroNumero = Console.ReadLine();
 
@@ -78,18 +91,21 @@ while (deveContinuar == true) //condição
     decimal primeiroNumero = Convert.ToDecimal(strPrimeiroNumero);
     decimal segundoNumero = Convert.ToDecimal(strSegundoNumero);
 
-
+    string simbolo = "";
     switch (operacaoSelecionada)
     {
         case "1":
             resultado = primeiroNumero + segundoNumero;
+            simbolo = "+";
             break;
 
         case "2":
             resultado = primeiroNumero - segundoNumero;
+            simbolo = "-";
             break;
         case "3":
             resultado = primeiroNumero * segundoNumero;
+            simbolo = "*";
             break;
         case "4":
             if (segundoNumero == 0)
@@ -100,16 +116,24 @@ while (deveContinuar == true) //condição
             }
 
             resultado = primeiroNumero / segundoNumero;
+            simbolo = "/";
             break;
         default:
+            simbolo = "?";
             Console.WriteLine("Selecione uma operação válida: ");
             continue;
 
+
     }
-
     Console.WriteLine($"A Operação dos dois números resulta em: {resultado}");
+    string linhaDohistorico = $"{primeiroNumero} {simbolo} {segundoNumero} = {resultado}";
+    historico.Add(linhaDohistorico);
 
+    Console.WriteLine("\nPressione Enter pra continuar...");
     Console.ReadLine();
-
 }
+
+
+
+
 
