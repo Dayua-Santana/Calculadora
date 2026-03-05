@@ -76,6 +76,7 @@ while (deveContinuar == true) //condição
             if (segundoNumero == 0)
             {
                 Console.WriteLine("Não é possivel dividir por 0!!!");
+                Console.ReadLine();
                 continue;
             }
 
@@ -87,9 +88,9 @@ while (deveContinuar == true) //condição
 
     }
 
+    Console.WriteLine("A Operação dos dois números resulta em: " + resultado);
+
+    Console.ReadLine();
 
 }
-Console.WriteLine("A Operação dos dois números resulta em: " + resultado);
-
-Console.ReadLine();
 
