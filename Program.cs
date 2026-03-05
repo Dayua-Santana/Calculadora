@@ -3,6 +3,8 @@
 // Requisito 3: Nossa calculadora deve permitir a multiplicação de dois números
 // Requisito 4: Nossa calculadora deve permitir a divisão de dois números
 
+Console.Clear();
+
 bool deveContinuar = true; //atribuição
 
 while (deveContinuar == true) //condição
@@ -20,7 +22,7 @@ while (deveContinuar == true) //condição
     Console.WriteLine("S - Sair");
 
     Console.Write("Selecione uma opção válida: ");
-    string operacaoSelecionada = Console.ReadLine();
+    string? operacaoSelecionada = Console.ReadLine();
 
     if (operacaoSelecionada == "S")
     {
@@ -28,12 +30,12 @@ while (deveContinuar == true) //condição
         continue;
     }
     Console.Write("Digite o primeiro número: ");
-    string strPrimeiroNumero = Console.ReadLine();
+    string? strPrimeiroNumero = Console.ReadLine();
 
     Console.WriteLine();
 
     Console.Write("Digite o segundo número: ");
-    string strSegundoNumero = Console.ReadLine();
+    string? strSegundoNumero = Console.ReadLine();
 
     Console.WriteLine();
 
@@ -42,10 +44,23 @@ while (deveContinuar == true) //condição
 
     Console.WriteLine();
 
-    int primeiroNumero = Convert.ToInt32(strPrimeiroNumero);
-    int segundoNumero = Convert.ToInt32(strSegundoNumero);
+    bool primeiroNumeroVazio = string.IsNullOrEmpty(strPrimeiroNumero);
+    bool segundoNumeroVazio = string.IsNullOrEmpty(strSegundoNumero);
 
-    int resultado;
+    if (primeiroNumeroVazio == true || segundoNumeroVazio == true)
+    {
+        Console.Write("Digite um número válido: ");
+        Console.ReadLine();
+
+        continue;
+    }
+
+    decimal numeroDecimal = 1.1234567m;
+
+    decimal primeiroNumero = Convert.ToDecimal(strPrimeiroNumero);
+    decimal segundoNumero = Convert.ToDecimal(strSegundoNumero);
+
+    decimal resultado;
 
     if (operacaoSelecionada == "1")
     {
