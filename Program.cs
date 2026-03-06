@@ -1,9 +1,11 @@
 ﻿bool deveContinuar = true;
-string historico = "";
 
-while (deveContinuar == true)
+string[] historicoOperacoes = new string[100]; //Array / Vetor / Arranjo
+int contadorOperacoes = 0;
+
+while (true)
 {
-
+    Console.Clear();
 
     Console.WriteLine("----------------------------");
     Console.WriteLine("Calculadora, 2026!");
@@ -11,33 +13,19 @@ while (deveContinuar == true)
 
     Console.WriteLine("1 - Soma\n2 - Subtração\n3 - Multiplicação\n4 - Divisão\n5 - Tabuada\nH - Ver Histórico\nS - Sair");
 
+    Console.WriteLine();
+
     Console.WriteLine("Selecione a operação desejada: ");
     string operacaoSelecionada = Console.ReadLine();
 
-    bool operacaoSelecionadaVazio = string.IsNullOrEmpty(operacaoSelecionada);
-
-    if (operacaoSelecionadaVazio == true)
-    {
-        Console.WriteLine("Informe uma opção válida!");
-        Console.ReadLine();
-
-        continue;
-    }
     if (operacaoSelecionada == "s" || operacaoSelecionada == "S")
     {
-        deveContinuar = false;
         Console.WriteLine("Encerrando o programa. Até mais...");
-        continue;
+        Console.WriteLine();
+        return;
     }
 
-    if (operacaoSelecionada == "h" || operacaoSelecionada == "h")
-    {
-        Console.WriteLine("Histórico de operações: ");
-        Console.WriteLine(historico);
-        Console.ReadLine();
-        continue;
-    }
-
+    //Lógica da Tabuada
     if (operacaoSelecionada == "5")
     {
         Console.WriteLine("Digite o número que deseja gerar a tabuada: ");
@@ -50,10 +38,37 @@ while (deveContinuar == true)
 
             Console.WriteLine(operacaoTabuada);
         }
+
         Console.ReadLine();
+
+        continue;
+
+    }
+
+    bool operacaoSelecionadaVazio = string.IsNullOrEmpty(operacaoSelecionada);
+
+    if (operacaoSelecionadaVazio == true)
+    {
+        Console.WriteLine("Informe uma opção válida!");
+        Console.ReadLine();
+
         continue;
     }
 
+    if (operacaoSelecionada == "h" || operacaoSelecionada == "h")
+    {
+        for (int contador = 0; contador < 10; contador++)
+        {
+            Console.WriteLine(historicoOperacoes[contador]);
+
+        }
+
+        Console.ReadLine();
+        continue;
+
+    }
+
+    // Lógica das Operações de Cálculo
     Console.WriteLine("Digite o primeiro número: ");
     string strPrimeiroNumero = Console.ReadLine();
 
@@ -82,40 +97,50 @@ while (deveContinuar == true)
     decimal segundoNumero = Convert.ToDecimal(strSegundoNumero);
 
     decimal resultado;
-    string simbolo = "";
+
+    string textoOperacao;
     switch (operacaoSelecionada)
     {
         case "1":
             resultado = primeiroNumero + segundoNumero;
-            simbolo = "+";
+            textoOperacao = $"{primeiroNumero} + {segundoNumero} = {resultado}";
             break;
         case "2":
             resultado = primeiroNumero - segundoNumero;
-            simbolo = "-";
+            textoOperacao = $"{primeiroNumero} - {segundoNumero} = {resultado}";
             break;
         case "3":
             resultado = primeiroNumero * segundoNumero;
-            simbolo = "*";
+            textoOperacao = $"{primeiroNumero} * {segundoNumero} = {resultado}";
             break;
+
         case "4":
             if (segundoNumero == 0)
             {
-                Console.WriteLine("Não é possível dividir por zero!");
-                Console.ReadLine();
+                Console.WriteLine("Não é possível dividir por zero. Tente novamente.");
+
                 continue;
             }
             resultado = primeiroNumero / segundoNumero;
-            simbolo = "/";
+            textoOperacao = $"{primeiroNumero} / {segundoNumero} = {resultado}";
             break;
+
+
         default:
             Console.WriteLine("Selecione uma operação válida!");
+            Console.ReadLine();
+
 
             continue;
     }
 
-    string operacao = ($"{primeiroNumero} {simbolo} {segundoNumero} = {resultado}");
+    if (contadorOperacoes < historicoOperacoes.Length)
+    {
+        historicoOperacoes[contadorOperacoes] = textoOperacao;
 
-    historico += operacao + "\n";
+        contadorOperacoes = contadorOperacoes + 1;
+    }
+
 
     Console.WriteLine($"O resultado da operação é: {resultado}");
 
